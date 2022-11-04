@@ -87,7 +87,6 @@ function round() {
         angleS.style.top = radius-parseFloat(angleS.style.height)*0.9 + 'px';
     
         updateClock();
-        setInterval(updateClock,1000);
     }
     
     createForm();
@@ -98,7 +97,6 @@ function round() {
         const hours = currTime.getHours()%12;
         const minutes = currTime.getMinutes();
         const seconds = currTime.getSeconds();
-        console.log(seconds);
         const msec = currTime.getMilliseconds();
         
         const secAngle = Math.PI*2/60*seconds;
@@ -108,5 +106,7 @@ function round() {
         document.getElementById("angleHours").style.transform='rotate('+hoursAngle+'rad)';
         document.getElementById("angleMin").style.transform='rotate('+minAngle+'rad)';
         document.getElementById("angleSec").style.transform='rotate('+secAngle+'rad)';
+        console.log(hours+':'+minutes+':'+seconds+'sec');
+
         setTimeout(updateClock,1000-msec);
 }
