@@ -26,6 +26,8 @@ function createForm() {
     form.appendChild(button);
 }
 
+createForm();
+
 function round() {
     let radius = parseFloat(document.forms.form1.radius.value);
     let centerX = radius;
@@ -33,65 +35,80 @@ function round() {
     
     document.body.removeChild(form1);
     
-    let round = document.createElement("div");
-    document.body.appendChild(round);
-    round.style.width = radius*2 + "px";
-    round.style.height = radius*2 + "px";
-    round.style.position = 'absolute';
-    round.classList.add("round");
+    let rSvg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+    document.body.appendChild(rSvg);
+    rSvg.setAttribute('width', radius*2.1 + 'px');
+    rSvg.setAttribute('height', radius*2.1 + 'px');
+    let round = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    rSvg.appendChild(round);
+    round.id='round';
+    round.setAttribute('cx', radius);
+    round.setAttribute('cy', radius);
+    round.setAttribute('r', radius);
+    round.setAttribute('stroke', 'red');
+    round.setAttribute('fill', 'rgb(68, 245, 245)');
     let hoursDistance = radius*0.8;
+
+
     for (let h = 1; h <= 12; h++) {    //12 hours
-        let numRound = document.createElement("div");
-        numRound.innerHTML = h;
-        round.appendChild(numRound);
+        let numRound = document.createElementNS("http://www.w3.org/2000/svg","circle");
         const hourAngle = Math.PI*2/12*h;
         const hourX = centerX+hoursDistance*Math.sin(hourAngle);
         const hourY = centerY-hoursDistance*Math.cos(hourAngle);
-        numRound.style.width = radius*0.2 + "px";
-        numRound.style.height = radius*0.2 + "px";
-        numRound.style.textAlign = 'center';
-        numRound.style.fontSize = radius/100+'em';//размер шрифта от размера циферблата
-        numRound.style.position = 'absolute';
-        numRound.style.left = (hourX-radius*0.2/2) + 'px';
-        numRound.style.top = (hourY-radius*0.2/2) + 'px';
-        numRound.classList.add("numRound");
+        numRound.setAttribute('cx', hourX);
+        numRound.setAttribute('cy', hourY);
+        numRound.setAttribute('r', radius*0.1);
+        numRound.setAttribute('stroke', 'red');
+        numRound.setAttribute('fill', 'rgb(218, 245, 142)');
+        rSvg.appendChild(numRound);
+        let textH = document.createElementNS("http://www.w3.org/2000/svg","text");
+        rSvg.appendChild(textH);
+        textH.innerHTML = h;
+        textH.setAttribute('font-size', 15*radius/100);//радиус влияет на шрифт
+        textH.setAttribute("dominant-baseline", "central");
+        textH.setAttribute('text-anchor', 'middle');
+        textH.setAttribute('x',hourX);
+        textH.setAttribute('y',hourY);
     }
-        let angleH = document.createElement("div");
-        round.appendChild(angleH);
-        angleH.id='angleHours';
-        angleH.style.position = 'absolute';
-        angleH.style.width = radius*0.15 + "px";//толщина стрелки
-        angleH.style.height = radius*0.6 + "px";//длина
-        angleH.classList.add("angle");
-        angleH.style.left = (radius-parseFloat(angleH.style.width)/2) + 'px';//смещение стрелки на половину толщины
-        angleH.style.top = radius-parseFloat(angleH.style.height)*0.9 + 'px';
-
-        let angleM = document.createElement("div");
-        round.appendChild(angleM);
-        angleM.id='angleMin';
-        angleM.style.position = 'absolute';
-        angleM.style.width = radius*0.1 + "px";//толщина стрелки
-        angleM.style.height = radius*0.7 + "px";//длина
-        angleM.classList.add("angle");
-        angleM.style.left = (radius-parseFloat(angleM.style.width)/2) + 'px';//смещение стрелки на половину толщины
-        angleM.style.top = radius-parseFloat(angleM.style.height)*0.9 + 'px';
-    
-        let angleS = document.createElement("div");
-        round.appendChild(angleS);
-        angleS.id='angleSec';
-        angleS.style.position = 'absolute';
-        angleS.style.width = radius*0.05 + "px";//толщина стрелки
-        angleS.style.height = radius + "px";//длина
-        angleS.classList.add("angle");
-        angleS.style.left = (radius-parseFloat(angleS.style.width)/2) + 'px';//смещение стрелки на половину толщины
-        angleS.style.top = radius-parseFloat(angleS.style.height)*0.9 + 'px';
+            let angleH = document.createElementNS("http://www.w3.org/2000/svg","line");
+            rSvg.appendChild(angleH);
+            angleH.setAttribute('x1', radius);
+            angleH.setAttribute('y1', radius+radius*0.1);//смещение от центра
+            angleH.setAttribute('x2', radius);
+            angleH.setAttribute('y2', radius-radius*0.5);//длина
+            angleH.setAttribute('stroke', 'black');
+            angleH.setAttribute('stroke-width', 15*radius/100);//толщина
+            angleH.setAttribute('stroke-linecap','round');//закругление
+            angleH.id='angleHours';
+            
+            let angleM = document.createElementNS("http://www.w3.org/2000/svg","line");
+            rSvg.appendChild(angleM);
+            angleM.setAttribute('x1', radius);
+            angleM.setAttribute('y1', radius+radius*0.1);
+            angleM.setAttribute('x2', radius);
+            angleM.setAttribute('y2', radius-radius*0.7);
+            angleM.setAttribute('stroke', 'black');
+            angleM.setAttribute('stroke-width', 7*radius/100);
+            angleM.setAttribute('stroke-linecap','round');
+            angleM.id='angleMin';
+            
+            let angleS = document.createElementNS("http://www.w3.org/2000/svg","line");
+            rSvg.appendChild(angleS);
+            angleS.setAttribute('x1', radius);
+            angleS.setAttribute('y1', radius+radius*0.1);
+            angleS.setAttribute('x2', radius);
+            angleS.setAttribute('y2', radius-radius*0.9);
+            angleS.setAttribute('stroke', 'black');
+            angleS.setAttribute('stroke-width', 2*radius/100);
+            angleS.setAttribute('stroke-linecap','round');
+            angleS.id='angleSec';
     
         updateClock();
     }
     
-    createForm();
     
     function updateClock() {
+        let radius=document.getElementById('round').getBoundingClientRect().width/2;//не смог найти форму и у неё достать радиус
         let currTime = new Date();
         
         const hours = currTime.getHours()%12;
@@ -103,9 +120,9 @@ function round() {
         const minAngle = Math.PI*2/60*minutes;
         const hoursAngle = Math.PI*2/12*(hours+minutes/60);
         
-        document.getElementById("angleHours").style.transform='rotate('+hoursAngle+'rad)';
-        document.getElementById("angleMin").style.transform='rotate('+minAngle+'rad)';
-        document.getElementById("angleSec").style.transform='rotate('+secAngle+'rad)';
+        document.getElementById("angleHours").setAttribute('transform','rotate('+hoursAngle*180/Math.PI+' '+radius+' '+radius+')');
+        document.getElementById("angleMin").setAttribute('transform','rotate('+minAngle*180/Math.PI+' '+radius+' '+radius+')');
+        document.getElementById("angleSec").setAttribute('transform','rotate('+secAngle*180/Math.PI+' '+radius+' '+radius+')');
         console.log(hours+':'+minutes+':'+seconds+'sec');
 
         setTimeout(updateClock,1000-msec);
