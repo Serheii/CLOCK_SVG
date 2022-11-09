@@ -108,7 +108,7 @@ function round() {
     
     
     function updateClock() {
-        let radius=document.getElementById('round').getBoundingClientRect().width/2;//не смог найти форму и у неё достать радиус
+        let radius=document.getElementById('round').getBoundingClientRect().width/2;
         let currTime = new Date();
         
         const hours = currTime.getHours()%12;

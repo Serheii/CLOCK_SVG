@@ -2,7 +2,7 @@
   height: 100%;
   width: 100%;
 } */
-.round {
+/* .round {
   border-radius: 50%;
   border: 1px solid red;
   background-color: rgb(68, 245, 245);
@@ -17,5 +17,4 @@
   border-radius: 50px;
   border: 1px solid rgb(255, 255, 255);
   background-color: rgb(10, 10, 10);
-  /* transform-origin: center center; */
-}
+} */
